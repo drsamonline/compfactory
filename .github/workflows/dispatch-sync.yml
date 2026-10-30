@@ -1,0 +1,31 @@
+name: dispatch-sync
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Which repo to sync'
+        required: true
+        default: 'ziptastic'
+        type: choice
+        options:
+          - ziptastic
+          - heavenzip
+          - both
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger ziptastic HCS sync
+        if: inputs.target == 'ziptastic' || inputs.target == 'both'
+        run: |
+          gh api -X POST repos/drsamonline/ziptastic/actions/workflows/sync-hcs.yml/dispatches -f ref=main
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      - name: Trigger heavenzip binaries sync
+        if: inputs.target == 'heavenzip' || inputs.target == 'both'
+        run: |
+          gh api -X POST repos/drsamonline/heavenzip/actions/workflows/sync-binaries.yml/dispatches -f ref=main
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
