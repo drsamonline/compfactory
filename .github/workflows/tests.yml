@@ -1,0 +1,21 @@
+name: tests
+
+# The four scripts in scripts/ are the whole of this repository, and they have to
+# agree about where the workspace is. They did not: sync.ps1 materialised
+# scripts/workspace while everything else looked at ../workspace.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: The workspace scripts must agree
+        run: bash tests/check-scripts.sh
