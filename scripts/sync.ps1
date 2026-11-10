@@ -2,7 +2,11 @@
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$ws = Join-Path $root "workspace"
+# The workspace lives at the repository root, where build-all.ps1 and
+# bump-hcs.ps1 look for it (..\workspace) and where sync.sh puts it. It used
+# to be joined to $root, the scripts directory, so a sync materialised
+# scripts/workspace - which .gitignore's anchored /workspace/ does not cover.
+$ws = Join-Path $root "..\workspace"
 New-Item -ItemType Directory -Force -Path $ws | Out-Null
 Set-Location $ws
 
