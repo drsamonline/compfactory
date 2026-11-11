@@ -16,6 +16,20 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+      # The dispatch steps below authenticate with PAT_TOKEN, not the default
+      # GITHUB_TOKEN: a token scoped to this repository cannot dispatch a
+      # workflow in another one. When the secret is absent, GitHub substitutes an
+      # empty string and `gh` fails four seconds later with "set the GH_TOKEN
+      # environment variable", which reads as a broken workflow rather than a
+      # missing secret. Say what is actually wrong.
+      - name: PAT_TOKEN must be set
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::PAT_TOKEN is not set in this repository. Cross-repository dispatch needs a fine-grained PAT with 'Actions: write' on drsamonline/ziptastic and drsamonline/heavenzip. See docs/WORKSPACE.md."
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
       # ziptastic has no sync-hcs workflow, and it never did: HCS reaches
       # vendor/hcs through scripts/bump-hcs.ps1, which is a local subtree pull
       # and a push. This dispatches the workflow that does exist, which verifies
