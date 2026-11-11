@@ -120,6 +120,7 @@ exception: they run against a stub, so they are not blocked by ziptastic at all.
 |---|---|---|
 | `run scripts/sync.ps1 first` | no `workspace/` | run the sync |
 | `git pull --ff-only` refuses | the clone has diverged | delete the clone, sync again |
-| dispatch step fails `Resource not accessible` | `PAT_TOKEN` missing or unscoped | set the secret |
+| dispatch step fails `set the GH_TOKEN environment variable` | `PAT_TOKEN` is not set at all — GitHub substitutes an empty string | set the secret; the workflow now fails at the first step and names it |
+| dispatch step fails `Resource not accessible by integration` | `PAT_TOKEN` is set but lacks `Actions: write` on the target repository | rescope the token |
 | a workflow run completes in 0 s with no jobs | the workflow file is invalid | fix the YAML; the commit page will still show green |
 | `check-vendor.sh` red | a pinned source does not materialise | `git submodule update --init --recursive`, then check the pin has a URL |
