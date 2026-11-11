@@ -16,10 +16,15 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger ziptastic HCS sync
+      # ziptastic has no sync-hcs workflow, and it never did: HCS reaches
+      # vendor/hcs through scripts/bump-hcs.ps1, which is a local subtree pull
+      # and a push. This dispatches the workflow that does exist, which verifies
+      # the pins. Until a real sync workflow is written, "sync" here means
+      # "prove the vendored tree materialises".
+      - name: Verify ziptastic's vendor tree
         if: inputs.target == 'ziptastic' || inputs.target == 'both'
         run: |
-          gh api -X POST repos/drsamonline/ziptastic/actions/workflows/sync-hcs.yml/dispatches -f ref=main
+          gh api -X POST repos/drsamonline/ziptastic/actions/workflows/vendor-check.yml/dispatches -f ref=main
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
 
