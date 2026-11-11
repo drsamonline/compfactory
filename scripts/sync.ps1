@@ -13,7 +13,8 @@ Set-Location $ws
 $repos = @(
     "https://github.com/drsamonline/HCS.git",
     "https://github.com/drsamonline/ziptastic.git",
-    "https://github.com/drsamonline/heavenzip.git"
+    "https://github.com/drsamonline/heavenzip.git",
+  "https://github.com/drsamonline/kosh.git"
 )
 
 foreach ($url in $repos) {

@@ -8,7 +8,8 @@ cd "$WS"
 for url in \
   "https://github.com/drsamonline/HCS.git" \
   "https://github.com/drsamonline/ziptastic.git" \
-  "https://github.com/drsamonline/heavenzip.git"
+  "https://github.com/drsamonline/heavenzip.git" \
+  "https://github.com/drsamonline/kosh.git"
 do
   name="$(basename "$url" .git)"
   if [ -d "$name/.git" ]; then

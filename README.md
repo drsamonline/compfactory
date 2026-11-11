@@ -2,16 +2,18 @@
 
 [![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
 Development workspace for the **CHCE** multi-repo compression project — the repository that
-coordinates `ziptastic`, `heavenzip` and the shared compression sources (`HCS`) rather than shipping
-an app of its own. Three repositories and this coordinator; there is no fourth. `preflate` is not a
-repository: it lives inside ziptastic as `src/precompressors/preflate_wrap.cpp`.
+coordinates `ziptastic`, `heavenzip`, the shared compression sources (`HCS`) and the workbench
+(`kosh`) rather than shipping an app of its own. Four repositories and this coordinator; there is no
+fifth. `preflate` is not a repository: it lives inside ziptastic as
+`src/precompressors/preflate_wrap.cpp`.
 
 ## What this repository is for
 
-CHCE (Holistic Compression Sources) is four things that have to agree: a source vault (`HCS`), the
-engine built from it (`ziptastic`), the orchestrator that chains prebuilt binaries (`heavenzip`), and
-this coordinator. It holds the phase plan, the hard rules all of them follow, and the per-repo agent
-prompts that keep the work in order.
+CHCE (Holistic Compression Sources) is five things that have to agree: a source vault (`HCS`), the
+engine built from it (`ziptastic`), the orchestrator that chains prebuilt binaries (`heavenzip`), the
+file workbench that does everything around the engine (`kosh`), and this coordinator. It holds the
+phase plan, the hard rules all of them follow, and the per-repo agent prompts that keep the work in
+order.
 
 ## The rules that matter
 

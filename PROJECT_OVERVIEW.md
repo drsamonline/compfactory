@@ -10,7 +10,7 @@ there is no linking, only process boundaries.
 
 ## 5. Hard Rules (Global — Apply Everywhere)
 
-These rules apply across all four repos. Violating any of them breaks the
+These rules apply across all five repos. Violating any of them breaks the
 architecture.
 
 ### DO
@@ -61,6 +61,7 @@ and non-negotiable.
 | `ziptastic` | MIT or Apache-2.0 | Permissive, matches the sources you actually link. |
 | `heavenzip` | MIT | Same. |
 | `compfactory` | MIT | Same. |
+| `kosh` | MIT | Python front end; MIT keeps it installable next to anything. |
 | `awesome-compressor` (future) | CC0 | A catalog should be freely forkable. |
 
 Add a `LICENSE` file via GitHub UI (**Add file → Create new file → type
@@ -170,6 +171,8 @@ hunting.
 
 - `HCS` is done. Only touch it to add sources.
 - `compfactory` is done. Only touch it if a script breaks.
+- `kosh` is the workbench, not the product. It ships when it is useful; it never
+  becomes the place where compression algorithms are written.
 - `heavenzip` cannot work end-to-end until ziptastic produces a real
   release. Phases 0–3 can be verified with a placeholder binary, but the
   project's success hinges on ziptastic.

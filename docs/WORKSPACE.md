@@ -1,8 +1,8 @@
 # The workspace
 
 `workspace/` is where the other CHCE repositories are checked out as **plain clones**, side by side, so
-that a single session can edit HCS, build ziptastic and run heavenzip without juggling three
-terminals.
+that a single session can edit HCS, build ziptastic and run heavenzip without juggling
+several terminals.
 
 ```
 compfactory/
@@ -11,7 +11,8 @@ compfactory/
 └── workspace/          git-ignored — three clones, not a repository
     ├── HCS/            the source vault
     ├── ziptastic/      the engine
-    └── heavenzip/      the orchestrator
+    ├── heavenzip/      the orchestrator
+    └── kosh/           the workbench
 ```
 
 `workspace/` is created by `scripts/sync.ps1` or `scripts/sync.sh` and by nothing else. If it is
@@ -42,7 +43,7 @@ bash tests/check-scripts.sh     # exit 0 = the scripts agree
 
 | Script | What it does | What it guarantees |
 |---|---|---|
-| `scripts/sync.ps1` (Windows) | Creates `workspace/`, clones `HCS`, `ziptastic`, `heavenzip` into it | Re-running performs `git pull --ff-only` in each; it never force-updates or discards local work |
+| `scripts/sync.ps1` (Windows) | Creates `workspace/`, clones `HCS`, `ziptastic`, `heavenzip`, `kosh` into it | Re-running performs `git pull --ff-only` in each; it never force-updates or discards local work |
 | `scripts/sync.sh` (macOS/Linux) | Same, bash | Same |
 | `scripts/bump-hcs.ps1` | `git subtree pull --prefix=vendor/hcs https://github.com/drsamonline/HCS.git main --squash`, then pushes ziptastic | The commit message starts `vendor: sync HCS`; a second run in a row is a no-op |
 | `scripts/build-all.ps1` | Configures and builds ziptastic in `workspace/ziptastic/build` | Fails with `run scripts/sync.ps1 first` if the clone is absent |
