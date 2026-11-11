@@ -1,6 +1,8 @@
 # compfactory
 
 [![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
+
+![Screenshot](docs/shot.png)
 Development workspace for the **CHCE** multi-repo compression project — the repository that
 coordinates `ziptastic`, `heavenzip`, the shared compression sources (`HCS`) and the workbench
 (`kosh`) rather than shipping an app of its own. Four repositories and this coordinator; there is no
