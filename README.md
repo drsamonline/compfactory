@@ -18,11 +18,14 @@ before compression and guarantees byte-exact recovery (`lexora`), and this coord
 phase plan, the hard rules all of them follow, and the per-repo agent prompts that keep the work in
 order.
 
-`lexora` joined on 15 Nov 2026 and is the one member whose CI does not run: Actions are paused by
-owner decision (its OQ-15) until free-tier minutes are restored, so its verification gate is local
-(`pytest -q` + linkcheck) and its fleet-style gates — version, badges, claims — are not yet written.
-It is a member in the documents before it is a member in the gates, and that gap is stated rather
-than implied.
+`lexora` joined on 15 Nov 2026. Its CI runs — `ci.yml` is green on `main` on 13 and 15 Nov, and on
+PR branches — but it has none of this fleet's gates: no version-in-three-places check, no badges
+recomputed from facts, no claims check against its numbers register. So it is a member in the
+documents before it is a member in the gates, and that gap is stated rather than implied.
+
+(An earlier version of this paragraph said its CI does not run, because its own `ci.yml` header
+still reads PAUSED from a 17 Oct owner decision about Actions minutes. That was wrong, and lexora
+is fixing the stale header.)
 
 ## The rules that matter
 
