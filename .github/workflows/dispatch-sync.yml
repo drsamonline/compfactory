@@ -1,5 +1,10 @@
 name: dispatch-sync
 on:
+  # Weekly, so the token's expiry is noticed before it lapses rather than during a
+  # release. The dispatch steps below are guarded by inputs.target, so a scheduled
+  # run only checks the secret.
+  schedule:
+    - cron: '0 4 * * 1'
   workflow_dispatch:
     inputs:
       target:
@@ -30,6 +35,38 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+      # A fine-grained PAT carries an expiry date (90 days by default) and GitHub
+      # reports it in the `github-authentication-token-expiration` header on any
+      # authenticated call. Nothing looked at it, so a token created on 12 Nov 2026
+      # would simply stop working around 10 Feb 2027, and the first symptom would
+      # be "Bad credentials" in the middle of a dispatch.
+      - name: PAT_TOKEN must not be about to expire
+        run: |
+          set -o pipefail
+          header=$(curl -sSI -H "Authorization: Bearer ${GH_TOKEN}" https://api.github.com/user \
+                   | tr -d '\r' \
+                   | awk -F': ' 'tolower($1)=="github-authentication-token-expiration"{print $2}')
+          if [ -z "$header" ]; then
+            echo "expiry not reported for this token type — presence was checked, expiry cannot be"
+            exit 0
+          fi
+          echo "PAT_TOKEN expires: $header"
+          days=$(( ( $(date -u -d "$header" +%s) - $(date -u +%s) ) / 86400 ))
+          echo "days remaining: $days"
+          if [ "$days" -lt 0 ]; then
+            echo "::error::PAT_TOKEN expired $(( -days )) day(s) ago. Create a new fine-grained PAT with 'Actions: write' on ziptastic and heavenzip, and update the secret — see docs/WORKSPACE.md."
+            exit 1
+          fi
+          if [ "$days" -lt 14 ]; then
+            echo "::error::PAT_TOKEN expires in $days day(s). Replace it now, not after it lapses — see docs/WORKSPACE.md."
+            exit 1
+          fi
+          if [ "$days" -lt 30 ]; then
+            echo "::warning::PAT_TOKEN expires in $days day(s)."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+
       # ziptastic has no sync-hcs workflow, and it never did: HCS reaches
       # vendor/hcs through scripts/bump-hcs.ps1, which is a local subtree pull
       # and a push. This dispatches the workflow that does exist, which verifies
