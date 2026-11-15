@@ -79,6 +79,13 @@ Set it in **Settings → Secrets and variables → Actions → New repository se
 dispatch steps fail with `Resource not accessible by integration`; the workflow itself stays green on
 checkout, which is why the failure is easy to miss.
 
+**It expires.** A fine-grained PAT carries an expiry date — 90 days is the longest GitHub offers, and
+the token in use was created on 12 Nov 2026, so it lapses around 10 Feb 2027. Nothing fails on the
+day it lapses except every dispatch, weeks later, with `Bad credentials`. `dispatch-sync` therefore
+reads the expiry from the `github-authentication-token-expiration` header on every run (weekly, and on
+each dispatch) and fails at 14 days, warns at 30. Replace the secret when it says so; do not wait for
+the failure.
+
 ## What the workspace is not
 
 - **Not a subtree.** `workspace/ziptastic/vendor/hcs` is ziptastic's own vendored copy, committed
