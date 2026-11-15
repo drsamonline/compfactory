@@ -11,11 +11,18 @@ fifth. `preflate` is not a repository: it lives inside ziptastic as
 
 ## What this repository is for
 
-CHCE (Holistic Compression Sources) is five things that have to agree: a source vault (`HCS`), the
+CHCE (Holistic Compression Sources) is six things that have to agree: a source vault (`HCS`), the
 engine built from it (`ziptastic`), the orchestrator that chains prebuilt binaries (`heavenzip`), the
-file workbench that does everything around the engine (`kosh`), and this coordinator. It holds the
+file workbench that does everything around the engine (`kosh`), the text canonicaliser that runs
+before compression and guarantees byte-exact recovery (`lexora`), and this coordinator. It holds the
 phase plan, the hard rules all of them follow, and the per-repo agent prompts that keep the work in
 order.
+
+`lexora` joined on 15 Nov 2026 and is the one member whose CI does not run: Actions are paused by
+owner decision (its OQ-15) until free-tier minutes are restored, so its verification gate is local
+(`pytest -q` + linkcheck) and its fleet-style gates — version, badges, claims — are not yet written.
+It is a member in the documents before it is a member in the gates, and that gap is stated rather
+than implied.
 
 ## The rules that matter
 
