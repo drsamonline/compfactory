@@ -10,7 +10,7 @@ there is no linking, only process boundaries.
 
 ## 5. Hard Rules (Global — Apply Everywhere)
 
-These rules apply across all five repos. Violating any of them breaks the
+These rules apply across all six repos. Violating any of them breaks the
 architecture.
 
 ### DO
@@ -55,14 +55,22 @@ and non-negotiable.
 
 ### Recommended `LICENSE` files (per-repo)
 
-| Repo | Recommended license | Rationale |
+| Repo | Licence in use | Why |
 |---|---|---|
-| `HCS` | CC0 / Public Domain, or MIT | HCS is a mirror. You don't claim authorship of code inside `old/`. |
-| `ziptastic` | MIT or Apache-2.0 | Permissive, matches the sources you actually link. |
-| `heavenzip` | MIT | Same. |
-| `compfactory` | MIT | Same. |
-| `kosh` | MIT | Python front end; MIT keeps it installable next to anything. |
+| `HCS` | **PolyForm Noncommercial 1.0.0** | A mirror. Its own licence covers the catalogue and tooling; the code under `old/` keeps its own terms, which the PolyForm terms cannot relicense. |
+| `ziptastic` | **MIT** | Permissive, matching the sources it links. A permissive licence is what lets the single binary be a drop-in. |
+| `heavenzip` | **MIT** | Same, and it links nothing. |
+| `compfactory` | **MIT** | Same. |
+| `kosh` | **MIT** | Python front end; MIT keeps it installable next to anything. |
+| `lexora` | **PolyForm Noncommercial 1.0.0** | Owner decision, [ADR-0009](https://github.com/drsamonline/lexora/blob/main/docs/ADR/ADR-0009-license-polyform-noncommercial.md), superseding an earlier MIT position (ADR-0006). Source-available, not OSI-approved; the `Required Notice:` line travels with every distribution. |
 | `awesome-compressor` (future) | CC0 | A catalog should be freely forkable. |
+
+This table used to recommend licences rather than record them, and two of its
+recommendations were already wrong: it suggested CC0/MIT for `HCS`, which has been
+PolyForm since it was written. `LICENSING_DECISION.md` in `heavenzip` is the
+argument for why the fleet is mixed rather than uniform — a permissive engine can
+be dropped into anything, a noncommercial vault can be read by anyone — and this
+table is now a record of what each repo actually uses, not advice.
 
 Add a `LICENSE` file via GitHub UI (**Add file → Create new file → type
 `LICENSE` → GitHub offers a template picker**), or via CLI. Add a
